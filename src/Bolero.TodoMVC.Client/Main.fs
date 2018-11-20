@@ -167,7 +167,7 @@ module TodoList =
                 fun text -> dispatch (Message.EditNewTask text)
             )
             .Edit(fun e ->
-                if e.Key = "Enter" then
+                if e.Key = "Enter" && state.NewTask <> "" then
                     dispatch Message.AddEntry
             )
             .ItemsLeft(
