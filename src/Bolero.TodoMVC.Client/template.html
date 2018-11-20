@@ -2,7 +2,7 @@
     <h1>todos</h1>
     <input bind="${Task}" onkeyup="${Edit}" class="new-todo" placeholder="What needs to be done?" autofocus>
 </header>
-<section class="main">
+<section class="main ${HiddenIfNoEntries}">
     <input bind="${IsCompleted}" id="toggle-all" class="toggle-all" type="checkbox">
     <label for="toggle-all">Mark all as complete</label>
     <ul class="todo-list">
@@ -19,7 +19,7 @@
         </template>
     </ul>
 </section>
-<footer class="footer">
+<footer class="footer ${HiddenIfNoEntries}">
     <span class="todo-count">${ItemsLeft}</span>
     <ul class="filters">
         <li>

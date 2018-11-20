@@ -161,6 +161,7 @@ module TodoList =
             |> List.filter (fun e -> not e.IsCompleted)
             |> List.length
         MasterTemplate()
+            .HiddenIfNoEntries(if List.isEmpty state.Entries then "hidden" else "")
             .Entries(
                 forEach state.Entries <| fun entry ->
                     let entryDispatch msg = dispatch (EntryMessage (entry.Id, msg))
