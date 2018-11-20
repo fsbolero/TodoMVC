@@ -10,7 +10,7 @@ type Startup() =
         ()
 
     member __.Configure(app: IBlazorApplicationBuilder) =
-        app.AddComponent<Main.MyApp>(".todoapp")
+        app.AddComponent<Main.TodoList.Component>(".todoapp")
 
 module Program =
 

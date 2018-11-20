@@ -64,7 +64,7 @@ module Entry =
             Some { e with IsCompleted = value }
 
     /// Render a given Todo entry.
-    let Render (dispatch: Message -> unit) (endpoint: EndPoint) (entry: Model) =
+    let Render (endpoint, entry) dispatch =
         MasterTemplate.Entry()
             .Label(text entry.Task)
             .CssAttrs(
@@ -96,6 +96,13 @@ module Entry =
             .StartEdit(fun _ -> dispatch Message.StartEdit)
             .Elt()
 
+    type Component() =
+        inherit ElmishComponent<EndPoint * Model, Message>()
+
+        override this.ShouldRender(oldModel, newModel) = oldModel <> newModel
+
+        override this.View model dispatch = Render model dispatch
+
 /// This module defines the model, the update and the view for a full todo list.
 module TodoList =    
 
@@ -123,6 +130,8 @@ module TodoList =
         | SetAllCompleted of completed: bool
         | EntryMessage of key: Entry.Key * message: Entry.Message
         | SetEndPoint of EndPoint
+
+    let Router = Router.infer SetEndPoint (fun m -> m.EndPoint)
 
     /// Defines how the Todo list is updated based on a message.
     let Update (msg: Message) (model: Model) =
@@ -155,7 +164,7 @@ module TodoList =
             .Entries(
                 forEach state.Entries <| fun entry ->
                     let entryDispatch msg = dispatch (EntryMessage (entry.Id, msg))
-                    Entry.Render entryDispatch state.EndPoint entry
+                    ecomp<Entry.Component,_,_> (state.EndPoint, entry) entryDispatch
             )
             .ClearCompleted(fun _ -> dispatch Message.ClearCompleted)
             .IsCompleted(
@@ -180,12 +189,10 @@ module TodoList =
             .CssFilterCompleted(attr.``class`` (if state.EndPoint = EndPoint.Completed then "selected" else null))
             .Elt()
 
-    let Router = Router.infer SetEndPoint (fun m -> m.EndPoint)
+    /// The entry point of our application, called on page load.
+    type Component() =
+        inherit ProgramComponent<Model, Message>()
 
-/// The entry point of our application, called on page load.
-type MyApp() =
-    inherit ProgramComponent<TodoList.Model, TodoList.Message>()
-
-    override this.Program =
-        Program.mkSimple (fun _ -> TodoList.Model.Empty) TodoList.Update TodoList.Render
-        |> Program.withRouter TodoList.Router
+        override this.Program =
+            Program.mkSimple (fun _ -> Model.Empty) Update Render
+            |> Program.withRouter Router
