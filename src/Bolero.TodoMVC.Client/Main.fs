@@ -68,7 +68,7 @@ module Entry =
         MasterTemplate.Entry()
             .Label(text entry.Task)
             .CssAttrs(
-                attr.``class`` <| String.concat " " [
+                attr.classes [
                     if entry.IsCompleted then yield "completed"
                     if entry.Editing.IsSome then yield "editing"
                     match endpoint, entry.IsCompleted with
