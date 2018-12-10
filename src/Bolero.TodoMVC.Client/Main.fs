@@ -4,7 +4,7 @@ open Elmish
 open Bolero
 open Bolero.Html
 
-/// Parses the index.html file and provides types to fill it with dynamic content.
+/// Parses the template.html file and provides types to fill it with dynamic content.
 type MasterTemplate = Template<"template.html">
 
 /// Our application has three URL endpoints.
@@ -190,7 +190,7 @@ module TodoList =
             .CssFilterCompleted(attr.``class`` (if state.EndPoint = EndPoint.Completed then "selected" else null))
             .Elt()
 
-    /// The entry point of our application, called on page load.
+    /// The entry point of our application, called on page load (see Startup.fs).
     type Component() =
         inherit ProgramComponent<Model, Message>()
 
