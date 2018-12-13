@@ -3,7 +3,7 @@
 param ([string] $env = "local")
 
 $msg = 'gh-pages.ps1: tests/client/wwwroot -> gh-pages'
-$gitURL = "https://github.com/intellifactory/Bolero.TodoMVC"
+$gitURL = "https://github.com/fsbolero/TodoMVC"
 
 write-host -foregroundColor "green" "=====> $msg"
 
@@ -33,7 +33,7 @@ if ($env -eq "appveyor") {
 git rm -rf *
 cp -r -force ../../publish/Bolero.TodoMVC.Client/dist/* .
 echo $null >> .nojekyll
-(get-content '.\index.html' -encoding utf8).replace('<base href="/"', '<base href="/Bolero.TodoMVC/"') | set-content '.\index.html' -encoding utf8
+(get-content '.\index.html' -encoding utf8).replace('<base href="/"', '<base href="/TodoMVC/"') | set-content '.\index.html' -encoding utf8
 git add . 2>git.log
 git commit --amend -am $msg
 git push -f -u origin gh-pages
