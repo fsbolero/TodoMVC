@@ -3,4 +3,8 @@ obj/
 .vs/
 *.user
 paket-files/
+.paket/*
+!.paket/paket.bootstrapper.proj
+!.paket/paket.bootstrapper.props
+!.paket/Paket.Restore.targets
 publish/
