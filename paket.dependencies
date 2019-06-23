@@ -1,11 +1,10 @@
 source https://api.nuget.org/v3/index.json
 source https://ci.appveyor.com/nuget/bolero
 storage: none
-framework: netstandard2.0
+framework: netstandard2.0, netcoreapp3.0
 
 nuget FSharp.Core ~> 4.5.0
-nuget Microsoft.AspNetCore.Blazor.Build ~> 0.7.0
-clitool Microsoft.AspNetCore.Blazor.Cli ~> 0.7.0
-nuget Microsoft.AspNetCore.Razor.Design ~> 2.1.0
-nuget Bolero
-nuget Bolero.Build
+nuget Microsoft.AspNetCore.Blazor.Build 3.0.0-preview5-19227-01
+nuget Microsoft.AspNetCore.Blazor.DevServer 3.0.0-preview5-19227-01
+nuget Bolero prerelease
+nuget Bolero.Build prerelease

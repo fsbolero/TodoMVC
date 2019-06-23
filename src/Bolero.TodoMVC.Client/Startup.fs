@@ -1,6 +1,6 @@
 namespace Bolero.TodoMVC.Client
 
-open Microsoft.AspNetCore.Blazor.Builder
+open Microsoft.AspNetCore.Components.Builder
 open Microsoft.AspNetCore.Blazor.Hosting
 open Microsoft.Extensions.DependencyInjection
 
@@ -9,7 +9,7 @@ type Startup() =
     member __.ConfigureServices(services: IServiceCollection) =
         ()
 
-    member __.Configure(app: IBlazorApplicationBuilder) =
+    member __.Configure(app: IComponentsApplicationBuilder) =
         app.AddComponent<Main.TodoList.Component>(".todoapp")
 
 module Program =
