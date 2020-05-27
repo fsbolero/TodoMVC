@@ -14,10 +14,11 @@ init:
   - git config --global core.autocrlf input
 
 build_script:
-- dotnet publish src/Bolero.TodoMVC.Client/ -o $PWD/publish/
+  - dotnet tool restore
+  - dotnet publish src/Bolero.TodoMVC.Client/ -o $PWD/publish/
 
 on_success:
-- pwsh -file ./tools/gh-pages.ps1 -env appveyor
+  - pwsh -file ./tools/gh-pages.ps1 -env appveyor
 
 environment:
   GH_TOKEN:
