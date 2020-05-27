@@ -8,7 +8,7 @@ $gitURL = "https://github.com/fsbolero/TodoMVC"
 write-host -foregroundColor "green" "=====> $msg"
 
 function clearDir() {
-  rm -r build/gh-pages -errorAction ignore
+  remove-item -r build/gh-pages -errorAction ignore
 }
 
 if ($env -eq "appveyor") {
@@ -31,7 +31,7 @@ if ($env -eq "appveyor") {
 }
 
 git rm -rf *
-cp -r -force ../../publish/wwwroot/* .
+copy-item -r -force ../../publish/wwwroot/* .
 echo $null >> .nojekyll
 (get-content '.\index.html' -encoding utf8).replace('<base href="/"', '<base href="/TodoMVC/"') | set-content '.\index.html' -encoding utf8
 git add . 2>git.log
