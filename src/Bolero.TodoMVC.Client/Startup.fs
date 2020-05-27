@@ -1,23 +1,14 @@
 namespace Bolero.TodoMVC.Client
 
-open Microsoft.AspNetCore.Components.Builder
-open Microsoft.AspNetCore.Blazor.Hosting
-open Microsoft.Extensions.DependencyInjection
-
-type Startup() =
-
-    member __.ConfigureServices(services: IServiceCollection) =
-        ()
-
-    member __.Configure(app: IComponentsApplicationBuilder) =
-        app.AddComponent<Main.TodoList.Component>(".todoapp")
+open Microsoft.AspNetCore.Components.WebAssembly.Hosting
+open Bolero.Remoting.Client
 
 module Program =
 
     [<EntryPoint>]
     let Main args =
-        BlazorWebAssemblyHost.CreateDefaultBuilder()
-            .UseBlazorStartup<Startup>()
-            .Build()
-            .Run()
+        let builder = WebAssemblyHostBuilder.CreateDefault(args)
+        builder.RootComponents.Add<Main.TodoList.Component>(".todoapp")
+        builder.Services.AddRemoting(builder.HostEnvironment) |> ignore
+        builder.Build().RunAsync() |> ignore
         0

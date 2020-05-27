@@ -165,7 +165,7 @@ module TodoList =
             .Entries(
                 forEach state.Entries <| fun entry ->
                     let entryDispatch msg = dispatch (EntryMessage (entry.Id, msg))
-                    ecomp<Entry.Component,_,_> (state.EndPoint, entry) entryDispatch
+                    ecomp<Entry.Component,_,_> [] (state.EndPoint, entry) entryDispatch
             )
             .ClearCompleted(fun _ -> dispatch Message.ClearCompleted)
             .IsCompleted(
