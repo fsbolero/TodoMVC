@@ -1,5 +1,7 @@
-version: 0.5.{build}
-image: Visual Studio 2017
+version: build {build}
+
+image:
+  - Ubuntu
 
 build:
   verbosity: minimal
@@ -9,14 +11,14 @@ branches:
   - master
 
 init:
-- cmd: choco install dotnetcore-sdk --version 3.0.100-preview5-011568
-- git config --global core.autocrlf input
+  - sudo apt update && sudo apt upgrade -y dotnet-sdk-3.1
+  - git config --global core.autocrlf input
 
 build_script:
-- ps: dotnet publish src/Bolero.TodoMVC.Client/ -o $pwd/publish/
+- dotnet publish src/Bolero.TodoMVC.Client/ -o $PWD/publish/
 
 on_success:
-- ps: .\tools\gh-pages.ps1 -env appveyor
+- pwsh -file ./tools/gh-pages.ps1 -env appveyor
 
 environment:
   GH_TOKEN:
