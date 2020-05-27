@@ -15,7 +15,7 @@ init:
 
 build_script:
   - dotnet tool restore
-  - dotnet publish src/Bolero.TodoMVC.Client/ -o $PWD/publish/
+  - dotnet publish src/Bolero.TodoMVC.Client/ -o $(pwd)/publish/
 
 on_success:
   - pwsh -file ./tools/gh-pages.ps1 -env appveyor
