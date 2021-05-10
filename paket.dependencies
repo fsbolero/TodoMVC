@@ -1,9 +1,8 @@
 source https://api.nuget.org/v3/index.json
 source https://ci.appveyor.com/nuget/bolero
 storage: none
-framework: netstandard2.1
+framework: net5.0
 
-nuget Microsoft.AspNetCore.Components.WebAssembly.Build
 nuget Microsoft.AspNetCore.Components.WebAssembly.DevServer
 nuget Bolero
 nuget Bolero.Build
