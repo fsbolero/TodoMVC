@@ -33,6 +33,7 @@ if ($env -eq "appveyor") {
 git rm -rf *
 copy-item -r -force ../../publish/wwwroot/* .
 echo $null >> .nojekyll
+echo "* -crlf" > .gitattributes
 (get-content '.\index.html' -encoding utf8).replace('<base href="/"', '<base href="/TodoMVC/"') | set-content '.\index.html' -encoding utf8
 git add . 2>git.log
 git commit --amend -am $msg
