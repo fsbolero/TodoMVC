@@ -68,14 +68,14 @@ module Entry =
         MasterTemplate.Entry()
             .Label(text entry.Task)
             .CssAttrs(
-                attr.classes [
-                    if entry.IsCompleted then yield "completed"
-                    if entry.Editing.IsSome then yield "editing"
+                attr.``class`` (String.concat " " [
+                    if entry.IsCompleted then "completed"
+                    if entry.Editing.IsSome then "editing"
                     match endpoint, entry.IsCompleted with
                     | EndPoint.Completed, false
-                    | EndPoint.Active, true -> yield "hidden"
+                    | EndPoint.Active, true -> "hidden"
                     | _ -> ()
-                ]
+                ])
             )
             .EditingTask(
                 entry.Editing |> Option.defaultValue "",
@@ -162,11 +162,11 @@ module TodoList =
             |> List.length
         MasterTemplate()
             .HiddenIfNoEntries(if List.isEmpty state.Entries then "hidden" else "")
-            .Entries(
-                forEach state.Entries <| fun entry ->
+            .Entries(concat {
+                for entry in state.Entries do
                     let entryDispatch msg = dispatch (EntryMessage (entry.Id, msg))
-                    ecomp<Entry.Component,_,_> [] (state.EndPoint, entry) entryDispatch
-            )
+                    ecomp<Entry.Component,_,_> (state.EndPoint, entry) entryDispatch
+            })
             .ClearCompleted(fun _ -> dispatch Message.ClearCompleted)
             .IsCompleted(
                 (countNotCompleted = 0),
